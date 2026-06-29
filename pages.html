@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Услуги IT-аутсорсинга и информационной безопасности — тарифы, FAQ и форма заявки.">
-  <title>Услуги — ТЕХКОМ</title>
+  <meta name="description" content="Услуги IT-аутсорсинга и информационной безопасности — тарифы, FAQ и контакты.">
+  <title>Тарифы и контакты — ТЕХКОМ</title>
 
   <link rel="canonical" href="https://tehcom.ru/pages.html">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://tehcom.ru/pages.html">
-  <meta property="og:title"       content="Услуги — ТЕХКОМ">
-  <meta property="og:description" content="IT-аутсорсинг и информационная безопасность: тарифы, FAQ и форма заявки. Отклик за 15 минут.">
+  <meta property="og:title"       content="Тарифы и контакты — ТЕХКОМ">
+  <meta property="og:description" content="IT-аутсорсинг и информационная безопасность: тарифы, FAQ и контакты. Отклик за 15 минут.">
   <meta property="og:image"       content="https://tehcom.ru/assets/hero-datacenter.jpg">
   <meta name="twitter:card"       content="summary_large_image">
 
@@ -29,20 +29,45 @@
     <div class="nav__inner">
 
       <a href="index.html" class="nav__logo" aria-label="ТЕХКОМ — на главную">
-        <span class="nav__logo-mark" aria-hidden="true">T</span>
-        ТЕХКОМ
+        <img src="logo.svg" alt="ТЕХКОМ" class="nav__logo-img">
       </a>
 
       <ul class="nav__links" role="list">
-        <li><a href="index.html#services"     class="nav__link">Услуги</a></li>
+        <li class="nav__item nav__item--has-dropdown">
+          <button class="nav__link nav__link--btn" aria-haspopup="true" aria-expanded="false">
+            Услуги
+            <svg class="nav__dropdown-caret" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3.5l3 3 3-3"/></svg>
+          </button>
+          <div class="nav__dropdown" role="menu">
+            <a href="service-cloud.html"       class="nav__dropdown-link" role="menuitem">Аренда вычислительных мощностей</a>
+            <a href="service-telephony.html"   class="nav__dropdown-link" role="menuitem">Телефония</a>
+            <a href="service-ddos.html"        class="nav__dropdown-link" role="menuitem">Защита от DDoS-атак</a>
+            <a href="service-integration.html" class="nav__dropdown-link" role="menuitem">Интеграция ИТ</a>
+            <div class="nav__dropdown-sep"></div>
+            <a href="service-seo.html"         class="nav__dropdown-link" role="menuitem">Продвижение сайтов</a>
+            <a href="service-marketing.html"   class="nav__dropdown-link" role="menuitem">Маркетинговые сервисы</a>
+            <a href="service-smm.html"         class="nav__dropdown-link" role="menuitem">SMM активности</a>
+            <a href="service-pr.html"          class="nav__dropdown-link" role="menuitem">Абонентское PR обслуживание</a>
+            <a href="service-gr.html"          class="nav__dropdown-link" role="menuitem">Government relations</a>
+            <a href="service-souvenirs.html"   class="nav__dropdown-link" role="menuitem">Сувенирная продукция</a>
+          </div>
+        </li>
         <li><a href="index.html#how-it-works" class="nav__link">Как мы работаем</a></li>
         <li><a href="index.html#metrics"      class="nav__link">Результаты</a></li>
-        <li><a href="#contact"                class="nav__link active">Контакты</a></li>
+        <li class="nav__item nav__item--has-dropdown">
+      <button class="nav__link nav__link--btn" aria-haspopup="true" aria-expanded="false">Компания <svg class="nav__dropdown-caret" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3.5l3 3 3-3"/></svg></button>
+      <div class="nav__dropdown" role="menu">
+        <a href="about.html"   class="nav__dropdown-link">О компании</a>
+        <a href="service.html" class="nav__dropdown-link">Сервис</a>
+        <div class="nav__dropdown-sep"></div>
+        <a href="pages.html"   class="nav__dropdown-link">Контакты</a>
+      </div>
+    </li>
       </ul>
 
       <div class="nav__actions">
-        <a href="tel:+74951234567" class="btn btn--ghost btn--sm">+7 (495) 123-45-67</a>
-        <a href="#contact"         class="btn btn--primary btn--sm">Оставить заявку</a>
+        <a href="tel:+79153843737" class="btn btn--ghost btn--sm">+7 (915) 384-37-37</a>
+        <a href="tel:+79153843737" class="btn btn--primary btn--sm">Позвонить</a>
       </div>
 
       <button class="nav__burger" aria-label="Открыть меню" aria-expanded="false">
@@ -60,7 +85,7 @@
   <a href="index.html#how-it-works" class="nav__mobile-link">Как мы работаем</a>
   <a href="index.html#metrics"      class="nav__mobile-link">Результаты</a>
   <a href="#contact"                class="nav__mobile-link">Контакты</a>
-  <a href="#contact"                class="btn btn--primary btn--lg">Оставить заявку</a>
+  <a href="tel:+79153843737" class="btn btn--primary btn--lg">Позвонить</a>
 </div>
 
 <!-- ============================================
@@ -82,7 +107,7 @@
       <div class="page-hero__content reveal">
         <span class="section-eyebrow">Детально об услугах</span>
         <h1 class="page-hero__title" id="page-title">
-          Тарифы, возможности<br>и форма заявки
+          Тарифы, возможности<br>и контакты
         </h1>
         <p class="page-hero__subtitle">
           Выберите подходящий формат сотрудничества или оставьте заявку —
@@ -134,7 +159,7 @@
           </div>
           <div class="sidebar-nav__item" data-target="contact">
             <span class="sidebar-nav__dot" aria-hidden="true"></span>
-            Оставить заявку
+            Контакты
           </div>
         </nav>
 
@@ -143,7 +168,7 @@
           <p class="sidebar-cta__desc">
             Позвоните нам прямо сейчас — дежурный инженер ответит без скриптов.
           </p>
-          <a href="tel:+74951234567" class="btn btn--primary" style="width:100%;justify-content:center">
+          <a href="tel:+79153843737" class="btn btn--primary" style="width:100%;justify-content:center">
             Позвонить
           </a>
         </div>
@@ -515,131 +540,32 @@
           </div>
         </section>
 
-        <!-- Contact Form -->
+        <!-- Contacts -->
         <section class="content-block reveal" id="contact" aria-labelledby="contact-title">
-          <h2 class="content-block__title" id="contact-title">Оставить заявку</h2>
-          <div class="content-block__body">
-            <p>Заполните форму — мы свяжемся в рабочий день в течение часа.</p>
-          </div>
-
-          <form class="contact-form" novalidate aria-label="Форма обратной связи">
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label" for="name">Ваше имя</label>
-                <input
-                  class="form-input"
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Иван Петров"
-                  autocomplete="name"
-                  required
-                >
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="company">Компания</label>
-                <input
-                  class="form-input"
-                  type="text"
-                  id="company"
-                  name="company"
-                  placeholder="ООО «Ромашка»"
-                  autocomplete="organization"
-                >
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="phone">Телефон</label>
-                <input
-                  class="form-input"
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  placeholder="+7 (___) ___-__-__"
-                  autocomplete="tel"
-                  required
-                >
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="email">Email</label>
-                <input
-                  class="form-input"
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="ivan@company.ru"
-                  autocomplete="email"
-                  required
-                >
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="service">Интересующая услуга</label>
-                <select class="form-select" id="service" name="service">
-                  <option value="">— Выберите направление —</option>
-                  <option value="outsourcing">IT-аутсорсинг</option>
-                  <option value="devops">DevOps / Cloud</option>
-                  <option value="audit">Аудит ИБ</option>
-                  <option value="pentest">Пентест</option>
-                  <option value="ddos">Защита от DDoS</option>
-                  <option value="soc">SOC / Мониторинг 24/7</option>
-                  <option value="compliance">Комплаенс / 152-ФЗ</option>
-                  <option value="all">Полный комплекс</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="employees">Кол-во сотрудников</label>
-                <select class="form-select" id="employees" name="employees">
-                  <option value="">— Размер компании —</option>
-                  <option value="1-25">До 25 человек</option>
-                  <option value="25-100">25–100 человек</option>
-                  <option value="100-500">100–500 человек</option>
-                  <option value="500+">Более 500 человек</option>
-                </select>
-              </div>
-              <div class="form-group form-group--full">
-                <label class="form-label" for="message">Опишите задачу</label>
-                <textarea
-                  class="form-textarea"
-                  id="message"
-                  name="message"
-                  placeholder="Расскажите о текущей ситуации и задачах — это поможет подготовить точное предложение..."
-                ></textarea>
-              </div>
-            </div>
-
-            <div style="display:flex;align-items:center;gap:var(--sp-4);flex-wrap:wrap">
-              <button type="submit" class="btn btn--primary btn--lg">
-                Отправить заявку →
-              </button>
-              <p style="font-size:var(--text-xs);color:var(--color-text-muted);max-width:300px;line-height:var(--leading-relaxed)">
-                Нажимая «Отправить», вы соглашаетесь с
-                <a href="#" style="color:var(--color-blue)">политикой конфиденциальности</a>.
-              </p>
-            </div>
-          </form>
-
-          <!-- Direct contacts below form -->
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4);margin-top:var(--sp-6)">
-            <div class="info-card" style="padding:var(--sp-5)">
+          <h2 class="content-block__title" id="contact-title">Контакты</h2>
+          <div class="contact-cards">
+            <div class="info-card">
               <div class="info-card__icon"><svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h4l2 5-2.5 1.5A10.5 10.5 0 0 0 11 13l1.5-2.5L17 12v4a2 2 0 0 1-2 2A15 15 0 0 1 2 5a2 2 0 0 1 2-2z"/></svg></div>
-              <h3 class="info-card__title" style="font-size:var(--text-sm)">Телефон</h3>
-              <a href="tel:+74951234567" class="info-card__desc" style="color:var(--color-blue)">
-                +7 (495) 123-45-67
-              </a>
+              <h3 class="info-card__title">Телефон / Telegram</h3>
+              <a href="tel:+79153843737" class="info-card__desc contact-link">+7 (915) 384-37-37</a>
+              <a href="https://t.me/+79153843737" class="info-card__desc contact-link" style="display:block;margin-top:var(--sp-1)">Telegram</a>
             </div>
-            <div class="info-card" style="padding:var(--sp-5)">
+            <div class="info-card">
               <div class="info-card__icon"><svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.5" width="16" height="12" rx="1.5"/><path d="M2 7l8 5.5L18 7"/></svg></div>
-              <h3 class="info-card__title" style="font-size:var(--text-sm)">Email</h3>
-              <a href="mailto:info@tehcom.ru" class="info-card__desc" style="color:var(--color-blue)">
-                info@tehcom.ru
-              </a>
+              <h3 class="info-card__title">Email</h3>
+              <a href="mailto:tehkom@tehkom2018.ru" class="info-card__desc contact-link">tehkom@tehkom2018.ru</a>
             </div>
-            <div class="info-card" style="padding:var(--sp-5)">
+            <div class="info-card">
               <div class="info-card__icon"><svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2a6 6 0 0 1 6 6c0 4.5-6 11-6 11S4 12.5 4 8a6 6 0 0 1 6-6z"/><circle cx="10" cy="8" r="2"/></svg></div>
-              <h3 class="info-card__title" style="font-size:var(--text-sm)">Офис</h3>
-              <p class="info-card__desc">г. Москва,<br>ул. Ленина, 42, оф. 301</p>
+              <h3 class="info-card__title">Офис</h3>
+              <p class="info-card__desc">г. Москва, Михайловский пр., д. 3, стр. 66</p>
+            </div>
+            <div class="info-card">
+              <div class="info-card__icon"><svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="16" height="11" rx="1.5"/><path d="M7 17h6M10 14v3"/></svg></div>
+              <h3 class="info-card__title">Юридический адрес</h3>
+              <p class="info-card__desc">119361, г. Москва, ул. Озёрная, д. 9, пом. 24, комн. 21</p>
             </div>
           </div>
-
         </section>
 
       </div>
@@ -659,12 +585,10 @@
 
       <div>
         <a href="index.html" class="nav__logo">
-          <span class="nav__logo-mark">T</span>
-          ТЕХКОМ
+          <img src="logo.svg" alt="ТЕХКОМ" class="nav__logo-img">
         </a>
         <p class="footer__brand-desc">
           IT-аутсорсинг и информационная безопасность для бизнеса.
-          15 лет защищаем инфраструктуру по всей России.
         </p>
       </div>
 
@@ -693,9 +617,10 @@
       <div>
         <p class="footer__col-label">Контакты</p>
         <ul class="footer__links">
-          <li><a href="tel:+74951234567"     class="footer__link">+7 (495) 123-45-67</a></li>
-          <li><a href="mailto:info@tehcom.ru" class="footer__link">info@tehcom.ru</a></li>
-          <li><span class="footer__link" style="cursor:default">г. Москва, ул. Ленина, 42</span></li>
+          <li><a href="tel:+79153843737"     class="footer__link">+7 (915) 384-37-37</a></li>
+          <li><a href="https://t.me/+79153843737" class="footer__link">Telegram</a></li>
+          <li><a href="mailto:tehkom@tehkom2018.ru" class="footer__link">tehkom@tehkom2018.ru</a></li>
+          <li><span class="footer__link" style="cursor:default">г. Москва, Михайловский пр., д. 3, стр. 66</span></li>
           <li><a href="#contact" class="footer__link" style="color:var(--color-blue)">→ Написать нам</a></li>
         </ul>
       </div>
@@ -703,14 +628,11 @@
     </div>
 
     <div class="footer__bottom">
-      <span class="footer__copy">© 2009–2026 ТЕХКОМ. Все права защищены.</span>
+      <span class="footer__copy">© 2018–2026 ТЕХКОМ. Все права защищены.</span>
       <div class="footer__status">
         <span class="footer__status-dot"></span>
         <span>All systems operational</span>
       </div>
-      <span class="footer__copy">
-        <a href="#" style="color:inherit">Политика конфиденциальности</a>
-      </span>
     </div>
   </div>
 </footer>

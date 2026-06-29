@@ -29,20 +29,45 @@
     <div class="nav__inner">
 
       <a href="index.html" class="nav__logo" aria-label="ТЕХКОМ — на главную">
-        <span class="nav__logo-mark" aria-hidden="true">T</span>
-        ТЕХКОМ
+        <img src="logo.svg" alt="ТЕХКОМ" class="nav__logo-img">
       </a>
 
       <ul class="nav__links" role="list">
-        <li><a href="#services"     class="nav__link">Услуги</a></li>
+        <li class="nav__item nav__item--has-dropdown">
+          <button class="nav__link nav__link--btn" aria-haspopup="true" aria-expanded="false">
+            Услуги
+            <svg class="nav__dropdown-caret" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3.5l3 3 3-3"/></svg>
+          </button>
+          <div class="nav__dropdown" role="menu">
+            <a href="service-cloud.html"       class="nav__dropdown-link" role="menuitem">Аренда вычислительных мощностей</a>
+            <a href="service-telephony.html"   class="nav__dropdown-link" role="menuitem">Телефония</a>
+            <a href="service-ddos.html"        class="nav__dropdown-link" role="menuitem">Защита от DDoS-атак</a>
+            <a href="service-integration.html" class="nav__dropdown-link" role="menuitem">Интеграция ИТ</a>
+            <div class="nav__dropdown-sep"></div>
+            <a href="service-seo.html"         class="nav__dropdown-link" role="menuitem">Продвижение сайтов</a>
+            <a href="service-marketing.html"   class="nav__dropdown-link" role="menuitem">Маркетинговые сервисы</a>
+            <a href="service-smm.html"         class="nav__dropdown-link" role="menuitem">SMM активности</a>
+            <a href="service-pr.html"          class="nav__dropdown-link" role="menuitem">Абонентское PR обслуживание</a>
+            <a href="service-gr.html"          class="nav__dropdown-link" role="menuitem">Government relations</a>
+            <a href="service-souvenirs.html"   class="nav__dropdown-link" role="menuitem">Сувенирная продукция</a>
+          </div>
+        </li>
         <li><a href="#how-it-works" class="nav__link">Как мы работаем</a></li>
         <li><a href="#metrics"      class="nav__link">Результаты</a></li>
-        <li><a href="pages.html"    class="nav__link">Контакты</a></li>
+        <li class="nav__item nav__item--has-dropdown">
+      <button class="nav__link nav__link--btn" aria-haspopup="true" aria-expanded="false">Компания <svg class="nav__dropdown-caret" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3.5l3 3 3-3"/></svg></button>
+      <div class="nav__dropdown" role="menu">
+        <a href="about.html"   class="nav__dropdown-link">О компании</a>
+        <a href="service.html" class="nav__dropdown-link">Сервис</a>
+        <div class="nav__dropdown-sep"></div>
+        <a href="pages.html"   class="nav__dropdown-link">Контакты</a>
+      </div>
+    </li>
       </ul>
 
       <div class="nav__actions">
-        <a href="tel:+74951234567" class="btn btn--ghost btn--sm">+7 (495) 123-45-67</a>
-        <a href="pages.html"       class="btn btn--primary btn--sm">Оставить заявку</a>
+        <a href="tel:+79153843737" class="btn btn--ghost btn--sm">+7 (915) 384-37-37</a>
+        <a href="tel:+79153843737" class="btn btn--primary btn--sm">Позвонить</a>
       </div>
 
       <button class="nav__burger" aria-label="Открыть меню" aria-expanded="false">
@@ -60,8 +85,10 @@
   <a href="#services"     class="nav__mobile-link">Услуги</a>
   <a href="#how-it-works" class="nav__mobile-link">Как мы работаем</a>
   <a href="#metrics"      class="nav__mobile-link">Результаты</a>
-  <a href="pages.html"    class="nav__mobile-link">Контакты</a>
-  <a href="pages.html"    class="btn btn--primary btn--lg">Оставить заявку</a>
+  <a href="about.html"   class="nav__mobile-link">О компании</a>
+  <a href="service.html" class="nav__mobile-link">Сервис</a>
+  <a href="pages.html"   class="nav__mobile-link">Контакты</a>
+  <a href="tel:+79153843737" class="btn btn--primary btn--lg">Позвонить</a>
 </div>
 
 <!-- ============================================
@@ -85,15 +112,15 @@
             <span class="hero__eyebrow-text">IT-аутсорсинг &amp; Информационная Безопасность</span>
           </div>
 
-          <h1 class="hero__title reveal reveal-delay-1" data-decode>
-            Безотказная IT&#8209;инфраструктура
-            и превентивная киберзащита
+          <h1 class="hero__title reveal reveal-delay-1">
+            Безотказная IT&#8209;инфраструктура<br>
+            и <span class="gradient-text">превентивная киберзащита</span>
           </h1>
 
           <p class="hero__subtitle reveal reveal-delay-2">
-            Берём на себя всю IT-нагрузку вашего бизнеса: от поддержки рабочих мест
-            до пентестов и мониторинга угроз 24/7. Пока вы масштабируетесь —
-            мы держим периметр.
+            Специализируемся на широком спектре услуг в области информационной
+            безопасности и системной интеграции: от поддержки рабочих мест
+            до пентестов и мониторинга угроз 24/7.
           </p>
 
           <div class="hero__actions reveal reveal-delay-3">
@@ -111,11 +138,11 @@
               <div class="hero__stat-label">Успешных атак на клиентов</div>
             </div>
             <div class="hero__stat">
-              <div class="hero__stat-value mono" data-count="15" data-suffix="+">15+</div>
+              <div class="hero__stat-value mono" data-count="7" data-suffix="+">7+</div>
               <div class="hero__stat-label">Лет на рынке</div>
             </div>
             <div class="hero__stat">
-              <div class="hero__stat-value mono" data-count="200" data-suffix="+">200+</div>
+              <div class="hero__stat-value mono" data-count="100" data-suffix="+">100+</div>
               <div class="hero__stat-label">Клиентов по России</div>
             </div>
           </div>
@@ -232,38 +259,38 @@
             <span class="badge badge--blue" style="margin-left:auto">Infrastructure</span>
           </div>
           <div class="services__cards">
-            <article class="svc-card svc-card--blue">
+            <a href="service.html" class="svc-card svc-card--blue">
               <span class="svc-card__icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="16" height="11" rx="1.5"/><path d="M7 17h6M10 14v3"/></svg></span>
               <div class="svc-card__body">
                 <h4 class="svc-card__title">Техническая поддержка</h4>
                 <p class="svc-card__desc">Helpdesk 24/7, удалённое и выездное обслуживание рабочих мест. SLA от 15 минут.</p>
               </div>
               <span class="svc-card__arrow" aria-hidden="true">→</span>
-            </article>
-            <article class="svc-card svc-card--blue">
+            </a>
+            <a href="service-integration.html" class="svc-card svc-card--blue">
               <span class="svc-card__icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="5" rx="7" ry="2.5"/><path d="M3 5v5c0 1.38 3.14 2.5 7 2.5s7-1.12 7-2.5V5M3 10v5c0 1.38 3.14 2.5 7 2.5s7-1.12 7-2.5v-5"/></svg></span>
               <div class="svc-card__body">
                 <h4 class="svc-card__title">Серверы и хранилища</h4>
                 <p class="svc-card__desc">Проектирование, установка, администрирование on-prem и гибридных окружений. RAID, резервное копирование.</p>
               </div>
               <span class="svc-card__arrow" aria-hidden="true">→</span>
-            </article>
-            <article class="svc-card svc-card--blue">
+            </a>
+            <a href="service-cloud.html" class="svc-card svc-card--blue">
               <span class="svc-card__icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 14.5A4.5 4.5 0 0 1 4 5.6a6 6 0 0 1 11.8 1.2A3.5 3.5 0 0 1 16 13.5H4z"/></svg></span>
               <div class="svc-card__body">
                 <h4 class="svc-card__title">Облако и DevOps</h4>
                 <p class="svc-card__desc">Миграция в облако, настройка CI/CD пайплайнов, Kubernetes, мониторинг и логирование.</p>
               </div>
               <span class="svc-card__arrow" aria-hidden="true">→</span>
-            </article>
-            <article class="svc-card svc-card--blue">
+            </a>
+            <a href="service-integration.html" class="svc-card svc-card--blue">
               <span class="svc-card__icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="7.5"/><path d="M10 2.5c-3 3-4 5.5-4 7.5s1 4.5 4 7.5M10 2.5c3 3 4 5.5 4 7.5s-1 4.5-4 7.5"/><line x1="2.5" y1="10" x2="17.5" y2="10"/></svg></span>
               <div class="svc-card__body">
                 <h4 class="svc-card__title">Сетевая инфраструктура</h4>
                 <p class="svc-card__desc">Проектирование сетей, VPN, SD-WAN, управляемые коммутаторы, Wi-Fi enterprise-класса.</p>
               </div>
               <span class="svc-card__arrow" aria-hidden="true">→</span>
-            </article>
+            </a>
           </div>
         </div>
 
@@ -285,38 +312,38 @@
             <span class="badge badge--green" style="margin-left:auto">CyberSec</span>
           </div>
           <div class="services__cards">
-            <article class="svc-card svc-card--green">
+            <a href="service-ddos.html" class="svc-card svc-card--green">
               <span class="svc-card__icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8.5" cy="8.5" r="5.5"/><line x1="12.5" y1="12.5" x2="17.5" y2="17.5"/></svg></span>
               <div class="svc-card__body">
                 <h4 class="svc-card__title">Пентесты и аудит</h4>
                 <p class="svc-card__desc">Имитация атак по методологии OWASP, тестирование периметра, web/API, социальная инженерия.</p>
               </div>
               <span class="svc-card__arrow" aria-hidden="true">→</span>
-            </article>
-            <article class="svc-card svc-card--green">
+            </a>
+            <a href="service-ddos.html" class="svc-card svc-card--green">
               <span class="svc-card__icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2L18 5.5V11c0 4-3.5 7-8 8.5C5.5 18 2 15 2 11V5.5L10 2z"/><line x1="10" y1="8" x2="10" y2="11"/><circle cx="10" cy="13.5" r=".5" fill="currentColor"/></svg></span>
               <div class="svc-card__body">
                 <h4 class="svc-card__title">Защита от DDoS</h4>
                 <p class="svc-card__desc">Фильтрация на уровне L3–L7, подключение scrubbing-центров, защита DNS и приложений в реальном времени.</p>
               </div>
               <span class="svc-card__arrow" aria-hidden="true">→</span>
-            </article>
-            <article class="svc-card svc-card--green">
+            </a>
+            <a href="service-ddos.html" class="svc-card svc-card--green">
               <span class="svc-card__icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 10s3.5-7 9-7 9 7 9 7-3.5 7-9 7-9-7-9-7z"/><circle cx="10" cy="10" r="2.5"/></svg></span>
               <div class="svc-card__body">
                 <h4 class="svc-card__title">SOC и мониторинг угроз</h4>
                 <p class="svc-card__desc">SIEM, UEBA, обнаружение аномалий. Реагирование на инциденты (IR) в режиме 24/7.</p>
               </div>
               <span class="svc-card__arrow" aria-hidden="true">→</span>
-            </article>
-            <article class="svc-card svc-card--green">
+            </a>
+            <a href="service-integration.html" class="svc-card svc-card--green">
               <span class="svc-card__icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2.5" width="12" height="15" rx="1.5"/><line x1="7" y1="7.5" x2="13" y2="7.5"/><line x1="7" y1="10.5" x2="13" y2="10.5"/><line x1="7" y1="13.5" x2="11" y2="13.5"/></svg></span>
               <div class="svc-card__body">
                 <h4 class="svc-card__title">Соответствие требованиям</h4>
                 <p class="svc-card__desc">Аттестация по 152-ФЗ, GDPR, PCI DSS, ГОСТ Р ИСО/МЭК 27001. Подготовка документации.</p>
               </div>
               <span class="svc-card__arrow" aria-hidden="true">→</span>
-            </article>
+            </a>
           </div>
         </div>
 
@@ -541,14 +568,14 @@
         </div>
         <div class="metric-card reveal reveal-delay-1" role="listitem">
           <div class="metric-card__value">0</div>
-          <div class="metric-card__label">Успешных атак<br>на клиентов за 15 лет</div>
+          <div class="metric-card__label">Успешных атак<br>на клиентов</div>
         </div>
         <div class="metric-card reveal reveal-delay-2" role="listitem">
           <div class="metric-card__value" data-count="15" data-suffix=" мин">15 мин</div>
           <div class="metric-card__label">Среднее время<br>первичного отклика</div>
         </div>
         <div class="metric-card reveal reveal-delay-3" role="listitem">
-          <div class="metric-card__value" data-count="200" data-suffix="+">200+</div>
+          <div class="metric-card__value" data-count="100" data-suffix="+">100+</div>
           <div class="metric-card__label">Корпоративных<br>клиентов</div>
         </div>
       </div>
@@ -566,11 +593,11 @@
           Готовы защитить<br>свой бизнес?
         </h2>
         <p class="cta-banner__subtitle">
-          Оставьте заявку — через 24 часа мы проведём
+          Позвоните или напишите — через 24 часа мы проведём
           бесплатный экспресс-аудит вашей инфраструктуры.
         </p>
         <div class="cta-banner__actions">
-          <a href="pages.html" class="btn btn--primary btn--lg">Оставить заявку</a>
+          <a href="tel:+79153843737" class="btn btn--primary btn--lg">Позвонить</a>
           <a href="#services"  class="btn btn--ghost   btn--lg">Подробнее об услугах</a>
         </div>
         </div>
@@ -587,12 +614,11 @@
 
       <div>
         <a href="index.html" class="nav__logo">
-          <span class="nav__logo-mark">T</span>
-          ТЕХКОМ
+          <img src="logo.svg" alt="ТЕХКОМ" class="nav__logo-img">
         </a>
         <p class="footer__brand-desc">
-          IT-аутсорсинг и информационная безопасность для бизнеса.
-          15 лет защищаем инфраструктуру по всей России.
+          Аутсорсинг информационных технологий и информационной безопасности.
+          Предоставление облачных ресурсов.
         </p>
       </div>
 
@@ -621,9 +647,10 @@
       <div>
         <p class="footer__col-label">Контакты</p>
         <ul class="footer__links">
-          <li><a href="tel:+74951234567"      class="footer__link">+7 (495) 123-45-67</a></li>
-          <li><a href="mailto:info@tehcom.ru"  class="footer__link">info@tehcom.ru</a></li>
-          <li><span class="footer__link" style="cursor:default">г. Москва, ул. Ленина, 42</span></li>
+          <li><a href="tel:+79153843737"              class="footer__link">+7 (915) 384-37-37</a></li>
+          <li><a href="https://t.me/+79153843737"     class="footer__link">Telegram</a></li>
+          <li><a href="mailto:tehkom@tehkom2018.ru"   class="footer__link">tehkom@tehkom2018.ru</a></li>
+          <li><span class="footer__link" style="cursor:default">г. Москва, Михайловский пр., д. 3, стр. 66</span></li>
           <li><a href="pages.html" class="footer__link" style="color:var(--color-blue)">→ Написать нам</a></li>
         </ul>
       </div>
@@ -631,14 +658,12 @@
     </div>
 
     <div class="footer__bottom">
-      <span class="footer__copy">© 2009–2026 ТЕХКОМ. Все права защищены.</span>
+      <span class="footer__copy">© 2018–2026 ТЕХКОМ. Все права защищены.</span>
       <div class="footer__status">
         <span class="footer__status-dot"></span>
         <span>All systems operational</span>
       </div>
-      <span class="footer__copy">
-        <a href="pages.html" style="color:inherit">Политика конфиденциальности</a>
-      </span>
+      
     </div>
   </div>
 </footer>

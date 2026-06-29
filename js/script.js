@@ -3,6 +3,42 @@
    ============================================ */
 
 /* ============================================
+   NAV DROPDOWN
+   ============================================ */
+(function initNavDropdown() {
+  const items = document.querySelectorAll('.nav__item--has-dropdown');
+  if (!items.length) return;
+
+  items.forEach(item => {
+    const btn = item.querySelector('.nav__link--btn');
+    if (!btn) return;
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = item.classList.contains('is-open');
+      items.forEach(i => {
+        i.classList.remove('is-open');
+        i.querySelector('.nav__link--btn')?.setAttribute('aria-expanded', 'false');
+      });
+      if (!open) {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  document.addEventListener('click', () => {
+    items.forEach(i => {
+      i.classList.remove('is-open');
+      i.querySelector('.nav__link--btn')?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') items.forEach(i => i.classList.remove('is-open'));
+  });
+}());
+
+/* ============================================
    NAV — sticky + scroll active
    ============================================ */
 (function initNav() {
@@ -48,9 +84,14 @@
     document.body.style.overflow = '';
   };
 
-  burger.addEventListener('click', open);
+  burger.addEventListener('click', () => {
+    overlay.classList.contains('open') ? close() : open();
+  });
   closeBtn?.addEventListener('click', close);
-  overlay.querySelectorAll('.nav__mobile-link').forEach(l => l.addEventListener('click', close));
+  overlay.querySelectorAll('.nav__mobile-link, .btn').forEach(l => l.addEventListener('click', close));
+
+  /* close on backdrop click */
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
 
   /* close on escape */
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
@@ -176,14 +217,15 @@ function animateCounter(el) {
   };
 
   const buildNodes = () => {
-    const density = 14000;
-    const count   = Math.max(8, Math.floor((canvas.width * canvas.height) / density));
+    const density = 12000;
+    const count   = Math.max(10, Math.floor((canvas.width * canvas.height) / density));
     nodes = Array.from({ length: count }, () => ({
-      x:  Math.random() * canvas.width,
-      y:  Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
-      r:  Math.random() * 1.4 + 0.4,
+      x:     Math.random() * canvas.width,
+      y:     Math.random() * canvas.height,
+      vx:    (Math.random() - 0.5) * 0.35,
+      vy:    (Math.random() - 0.5) * 0.35,
+      r:     Math.random() * 1.6 + 0.5,
+      green: Math.random() < 0.25,
     }));
   };
 
@@ -222,7 +264,7 @@ function animateCounter(el) {
     nodes.forEach(n => {
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(0, 212, 255, 0.55)';
+      ctx.fillStyle = n.green ? 'rgba(57, 255, 20, 0.50)' : 'rgba(0, 212, 255, 0.55)';
       ctx.fill();
     });
 
@@ -287,6 +329,41 @@ function animateCounter(el) {
     submitBtn.textContent = 'Заявка отправлена';
     submitBtn.disabled = true;
     submitBtn.style.opacity = '0.65';
+  });
+}());
+
+/* ============================================
+   3D CARD TILT
+   ============================================ */
+(function initCardTilt() {
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  const cards = document.querySelectorAll('.svc-card, .case-card, .info-card');
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      /* Disable transform transition so tilt tracks the cursor instantly */
+      card.style.transition = 'background 300ms ease, border-color 300ms ease, box-shadow 300ms ease';
+    });
+
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x  = e.clientX - rect.left;
+      const y  = e.clientY - rect.top;
+      const cx = rect.width  / 2;
+      const cy = rect.height / 2;
+      const rotY =  ((x - cx) / cx) * 5;
+      const rotX = -((y - cy) / cy) * 5;
+      const liftPx = card.classList.contains('case-card') ? -6 : -3;
+      card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(${liftPx}px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      /* Restore full transition so card eases back smoothly */
+      card.style.transition = '';
+      card.style.transform  = '';
+    });
   });
 }());
 

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ↓ SEO: поменяй description -->
+  <meta name="description" content="ОПИСАНИЕ СТРАНИЦЫ">
+  <!-- ↓ SEO: поменяй title -->
+  <title>ЗАГОЛОВОК — ТЕХКОМ</title>
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <!-- Главная использует base.css + index.css -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<!-- ============ НАВИГАЦИЯ (не трогать) ============ -->
+<nav class="nav" role="navigation" aria-label="Главная навигация">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="ТЕХКОМ — на главную">
+        <img src="logo.svg" alt="ТЕХКОМ" class="nav__logo-img">
+      </a>
+      <ul class="nav__links" role="list">
+        <li class="nav__item nav__item--has-dropdown">
+          <button class="nav__link nav__link--btn" aria-haspopup="true" aria-expanded="false">
+            Услуги
+            <svg class="nav__dropdown-caret" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3.5l3 3 3-3"/></svg>
+          </button>
+          <div class="nav__dropdown" role="menu">
+            <a href="service-cloud.html"       class="nav__dropdown-link">Аренда вычислительных мощностей</a>
+            <a href="service-telephony.html"   class="nav__dropdown-link">Телефония</a>
+            <a href="service-ddos.html"        class="nav__dropdown-link">Защита от DDoS-атак</a>
+            <a href="service-integration.html" class="nav__dropdown-link">Интеграция ИТ</a>
+            <div class="nav__dropdown-sep"></div>
+            <a href="service-seo.html"         class="nav__dropdown-link">Продвижение сайтов</a>
+            <a href="service-marketing.html"   class="nav__dropdown-link">Маркетинговые сервисы</a>
+            <a href="service-smm.html"         class="nav__dropdown-link">SMM активности</a>
+            <a href="service-pr.html"          class="nav__dropdown-link">Абонентское PR обслуживание</a>
+            <a href="service-gr.html"          class="nav__dropdown-link">Government relations</a>
+            <a href="service-souvenirs.html"   class="nav__dropdown-link">Сувенирная продукция</a>
+          </div>
+        </li>
+        <li><a href="#how-it-works" class="nav__link">Как мы работаем</a></li>
+        <li><a href="#metrics"      class="nav__link">Результаты</a></li>
+        <li><a href="pages.html"    class="nav__link">Контакты</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="tel:+79153843737" class="btn btn--ghost btn--sm">+7 (915) 384-37-37</a>
+        <a href="tel:+79153843737" class="btn btn--primary btn--sm">Позвонить</a>
+      </div>
+      <button class="nav__burger" aria-label="Открыть меню" aria-expanded="false">
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="nav__mobile-overlay" role="dialog" aria-modal="true" aria-label="Мобильное меню">
+  <button class="nav__mobile-close" aria-label="Закрыть меню">✕</button>
+  <a href="#services"     class="nav__mobile-link">Услуги</a>
+  <a href="#how-it-works" class="nav__mobile-link">Как мы работаем</a>
+  <a href="#metrics"      class="nav__mobile-link">Результаты</a>
+  <a href="pages.html"    class="nav__mobile-link">Контакты</a>
+  <a href="pages.html"    class="btn btn--primary btn--lg">Оставить заявку</a>
+</div>
+<!-- ============ /НАВИГАЦИЯ ============ -->
+
+<main>
+
+  <!-- ============ СЕКЦИЯ: замени id и содержимое ============ -->
+  <section id="СЕКЦИЯ-ID" class="КЛАССЫ-СЕКЦИИ" aria-labelledby="ЗАГОЛОВОК-ID">
+    <div class="container">
+
+      <div class="section-header reveal">
+        <span class="section-eyebrow">НАДПИСЬ НАД ЗАГОЛОВКОМ</span>
+        <h2 class="section-title" id="ЗАГОЛОВОК-ID">ЗАГОЛОВОК СЕКЦИИ</h2>
+        <p class="section-subtitle">ПОДЗАГОЛОВОК СЕКЦИИ</p>
+      </div>
+
+      <!-- ↓ Содержимое секции -->
+
+    </div>
+  </section>
+  <!-- ============ /СЕКЦИЯ ============ -->
+
+</main>
+
+<!-- ============ ФУТЕР (не трогать) ============ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a href="index.html" class="nav__logo">
+          <img src="logo.svg" alt="ТЕХКОМ" class="nav__logo-img">
+        </a>
+        <p class="footer__brand-desc">Аутсорсинг информационных технологий и информационной безопасности. Предоставление облачных ресурсов.</p>
+      </div>
+      <nav aria-label="Услуги">
+        <p class="footer__col-label">Услуги</p>
+        <ul class="footer__links">
+          <li><a href="service-cloud.html"       class="footer__link">Аренда мощностей</a></li>
+          <li><a href="service-ddos.html"        class="footer__link">Защита от DDoS</a></li>
+          <li><a href="service-integration.html" class="footer__link">Интеграция ИТ</a></li>
+          <li><a href="service-telephony.html"   class="footer__link">Телефония</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Компания">
+        <p class="footer__col-label">Компания</p>
+        <ul class="footer__links">
+          <li><a href="about.html"       class="footer__link">О нас</a></li>
+          <li><a href="index.html#cases" class="footer__link">Кейсы</a></li>
+          <li><a href="pages.html"       class="footer__link">Контакты</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="footer__col-label">Контакты</p>
+        <ul class="footer__links">
+          <li><a href="tel:+79153843737"            class="footer__link">+7 (915) 384-37-37</a></li>
+          <li><a href="mailto:tehkom@tehkom2018.ru" class="footer__link">tehkom@tehkom2018.ru</a></li>
+          <li><span class="footer__link" style="cursor:default">г. Москва, Михайловский пр., д. 3, стр. 66</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copy">© 2018–2026 ТЕХКОМ. Все права защищены.</span>
+      <div class="footer__status">
+        <span class="footer__status-dot"></span>
+        <span>All systems operational</span>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+<!-- ============ /ФУТЕР ============ -->
+
+<script src="js/script.js" defer></script>
+</body>
+</html>
