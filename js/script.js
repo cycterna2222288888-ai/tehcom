@@ -338,7 +338,7 @@ function animateCounter(el) {
 (function initCardTilt() {
   if (window.matchMedia('(hover: none)').matches) return;
 
-  const cards = document.querySelectorAll('.svc-card, .case-card, .info-card');
+  const cards = document.querySelectorAll('.svc-card, .case-card, .info-card, .metric-card');
   if (!cards.length) return;
 
   cards.forEach(card => {
@@ -398,3 +398,254 @@ function animateCounter(el) {
 
   sectionEls.forEach(el => observer.observe(el));
 }());
+
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+(function initScrollProgress() {
+  const bar = document.createElement("div");
+  bar.id = "scroll-bar";
+  document.body.prepend(bar);
+  window.addEventListener(
+    "scroll",
+    () => {
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      if (docH > 0) bar.style.width = ((window.scrollY / docH) * 100).toFixed(1) + "%";
+    },
+    { passive: true }
+  );
+})();
+
+/* ============================================
+   CUSTOM CURSOR + MAGNETIC BUTTONS — desktop
+   ============================================ */
+(function initCustomCursor() {
+  if (window.matchMedia("(hover: none)").matches) return;
+
+  const dot = document.createElement("div");
+  dot.className = "cursor-dot";
+  const ring = document.createElement("div");
+  ring.className = "cursor-ring";
+  document.body.append(dot, ring);
+
+  let mx = -200, my = -200, rx = -200, ry = -200;
+
+  document.addEventListener("mousemove", (e) => {
+    mx = e.clientX;
+    my = e.clientY;
+    dot.style.transform = `translate(${mx}px,${my}px)`;
+  });
+  document.documentElement.addEventListener("mouseleave", () => {
+    dot.style.opacity = "0";
+    ring.style.opacity = "0";
+  });
+  document.documentElement.addEventListener("mouseenter", () => {
+    dot.style.opacity = "1";
+    ring.style.opacity = "1";
+  });
+
+  (function loop() {
+    rx += (mx - rx) * 0.11;
+    ry += (my - ry) * 0.11;
+    ring.style.transform = `translate(${rx.toFixed(1)}px,${ry.toFixed(1)}px)`;
+    requestAnimationFrame(loop);
+  })();
+
+  const hoverSel = "a, button, .btn, .svc-card, .case-card, .info-card, .metric-card, label";
+  document.addEventListener("mouseover", (e) => {
+    if (e.target.closest(hoverSel)) ring.classList.add("is-hover");
+  });
+  document.addEventListener("mouseout", (e) => {
+    if (e.target.closest(hoverSel)) ring.classList.remove("is-hover");
+  });
+})();
+
+(function initMagneticButtons() {
+  if (window.matchMedia("(hover: none)").matches) return;
+  document.querySelectorAll(".btn--primary.btn--lg, .btn--outline-green.btn--lg").forEach((btn) => {
+    btn.addEventListener("mousemove", (e) => {
+      const r = btn.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      btn.style.transform = `translate(${(dx * 0.28).toFixed(1)}px,${(dy * 0.28).toFixed(1)}px)`;
+      btn.style.transition = "transform 0.1s linear";
+    });
+    btn.addEventListener("mouseleave", () => {
+      btn.style.transform = "";
+      btn.style.transition = "transform 0.5s cubic-bezier(0.23,1,0.32,1)";
+      setTimeout(() => { btn.style.transition = ""; }, 520);
+    });
+  });
+})();
+
+/* ============================================
+   HERO EYEBROW — TYPEWRITER
+   ============================================ */
+(function initHeroType() {
+  const el = document.querySelector(".hero__eyebrow-text");
+  if (!el) return;
+
+  const text = el.textContent.trim();
+  el.textContent = "";
+  const cursor = document.createElement("span");
+  cursor.className = "type-cursor";
+  cursor.textContent = "_";
+  el.appendChild(cursor);
+
+  let i = 0;
+  const iv = setInterval(() => {
+    if (i >= text.length) { clearInterval(iv); return; }
+    el.insertBefore(document.createTextNode(text[i]), cursor);
+    i++;
+  }, 42);
+})();
+
+/* ============================================
+   SECTION EYEBROW SCRAMBLE ON SCROLL
+   ============================================ */
+(function initEyebrowScramble() {
+  const eyebrows = document.querySelectorAll(".section-eyebrow");
+  if (!eyebrows.length) return;
+
+  const triggered = new WeakSet();
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || triggered.has(entry.target)) return;
+        triggered.add(entry.target);
+        setTimeout(() => runDecode(entry.target), 120);
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  eyebrows.forEach((el) => {
+    if (!el.closest(".hero")) observer.observe(el);
+  });
+})();
+
+/* ============================================
+   GYROSCOPE PARALLAX — mobile hero
+   ============================================ */
+(function initGyroParallax() {
+  if (!window.matchMedia("(hover: none)").matches) return;
+
+  const radial = document.querySelector(".hero__radial");
+  if (!radial) return;
+
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  const MAX = 22;
+
+  radial.style.animation = "none";
+
+  const onOrientation = (e) => {
+    const gamma = e.gamma || 0;
+    const beta = e.beta || 0;
+    tx = Math.max(-MAX, Math.min(MAX, (gamma / 35) * MAX));
+    ty = Math.max(-MAX, Math.min(MAX, ((beta - 40) / 35) * MAX));
+  };
+
+  const startLoop = () => {
+    (function loop() {
+      cx += (tx - cx) * 0.055;
+      cy += (ty - cy) * 0.055;
+      radial.style.transform = `translate(${cx.toFixed(1)}px,${cy.toFixed(1)}px)`;
+      requestAnimationFrame(loop);
+    })();
+  };
+
+  if (
+    typeof DeviceOrientationEvent !== "undefined" &&
+    typeof DeviceOrientationEvent.requestPermission === "function"
+  ) {
+    // iOS 13+ — needs permission from user gesture
+    document.addEventListener(
+      "touchstart",
+      () => {
+        DeviceOrientationEvent.requestPermission()
+          .then((state) => {
+            if (state === "granted") {
+              window.addEventListener("deviceorientation", onOrientation, { passive: true });
+              startLoop();
+            }
+          })
+          .catch(() => {});
+      },
+      { once: true }
+    );
+  } else if (window.DeviceOrientationEvent) {
+    window.addEventListener("deviceorientation", onOrientation, { passive: true });
+    startLoop();
+  }
+})();
+
+/* ============================================
+   TOUCH RIPPLE — mobile tap feedback
+   ============================================ */
+(function initTouchRipple() {
+  if (!window.matchMedia("(hover: none)").matches) return;
+
+  const sel = ".btn, .svc-card, .case-card, .info-card, .metric-card";
+
+  document.addEventListener(
+    "touchstart",
+    (e) => {
+      const el = e.target.closest(sel);
+      if (!el) return;
+
+      const touch = e.touches[0];
+      const rect = el.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height) * 2;
+      const x = touch.clientX - rect.left - size / 2;
+      const y = touch.clientY - rect.top - size / 2;
+
+      const ripple = document.createElement("span");
+      ripple.className = "touch-ripple";
+      ripple.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px`;
+      el.appendChild(ripple);
+      ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
+    },
+    { passive: true }
+  );
+})();
+
+/* ============================================
+   CASES SWIPE DOTS — mobile
+   ============================================ */
+(function initCasesSwipe() {
+  const grid = document.querySelector(".cases__grid");
+  if (!grid) return;
+
+  const cards = grid.querySelectorAll(".case-card");
+  if (cards.length < 2) return;
+
+  const dotsWrap = document.createElement("div");
+  dotsWrap.className = "cases-dots";
+
+  const dots = Array.from(cards).map((card, i) => {
+    const dot = document.createElement("button");
+    dot.className = "cases-dot" + (i === 0 ? " is-active" : "");
+    dot.setAttribute("aria-label", `Кейс ${i + 1}`);
+    dot.addEventListener("click", () => {
+      card.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+    });
+    dotsWrap.appendChild(dot);
+    return dot;
+  });
+
+  grid.insertAdjacentElement("afterend", dotsWrap);
+
+  // IntersectionObserver on the grid as root — marks whichever card is most visible
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const idx = Array.from(cards).indexOf(entry.target);
+        if (idx >= 0) dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+      });
+    },
+    { root: grid, threshold: 0.5 }
+  );
+
+  cards.forEach((card) => io.observe(card));
+})();

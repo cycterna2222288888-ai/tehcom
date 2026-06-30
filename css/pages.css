@@ -328,9 +328,21 @@
 }
 /* Featured variant */
 .pricing-card--featured {
-  border-color: var(--color-blue-border);
-  background: linear-gradient(160deg, var(--color-blue-dim) 0%, var(--color-bg-card) 100%);
+  --border-angle: 0deg;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(160deg, var(--color-blue-dim) 0%, var(--color-bg-card) 100%) padding-box,
+    conic-gradient(
+      from var(--border-angle),
+      rgba(0, 212, 255, 0.1) 0%,
+      rgba(0, 212, 255, 0.65) 25%,
+      rgba(124, 92, 255, 0.55) 50%,
+      rgba(57, 255, 20, 0.45) 75%,
+      rgba(0, 212, 255, 0.1) 100%
+    ) border-box;
+  animation: border-rotate 5s linear infinite;
 }
+.pricing-card--featured:hover { border-color: transparent; }
 .pricing-card--featured .pricing-card__popular {
   position: absolute;
   top: -12px;

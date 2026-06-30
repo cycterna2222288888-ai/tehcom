@@ -693,3 +693,152 @@ p { color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
   .footer__grid   { grid-template-columns: 1fr; }
   .footer__bottom { flex-direction: column; text-align: center; }
 }
+
+/* ============================================
+   @PROPERTY — animatable CSS custom properties
+   ============================================ */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ============================================
+   PAGE TRANSITION
+   ============================================ */
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+body { animation: page-fade-in 600ms ease both; }
+
+/* ============================================
+   FILM GRAIN TEXTURE
+   ============================================ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px;
+}
+
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+#scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-blue) 0%, #7c5cff 50%, var(--color-green) 100%);
+  z-index: 99999;
+  pointer-events: none;
+}
+
+/* ============================================
+   CUSTOM CURSOR — desktop only
+   ============================================ */
+@media (hover: hover) and (pointer: fine) {
+  * { cursor: none !important; }
+
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: var(--color-blue);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    will-change: transform;
+    transition: opacity 0.15s;
+  }
+
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+    border: 1.5px solid rgba(0, 212, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    will-change: transform;
+    transition: width 0.22s ease, height 0.22s ease, margin 0.22s ease,
+      border-color 0.22s ease, background 0.22s ease, opacity 0.15s;
+  }
+
+  .cursor-ring.is-hover {
+    width: 46px;
+    height: 46px;
+    margin: -23px 0 0 -23px;
+    border-color: rgba(57, 255, 20, 0.6);
+    background: rgba(57, 255, 20, 0.04);
+  }
+}
+
+/* ============================================
+   TYPEWRITER CURSOR
+   ============================================ */
+.type-cursor {
+  display: inline-block;
+  color: var(--color-blue);
+  margin-left: 1px;
+  animation: type-blink 0.8s step-start infinite;
+}
+@keyframes type-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ============================================
+   ANIMATED GRADIENT BORDER
+   ============================================ */
+@keyframes border-rotate {
+  to { --border-angle: 360deg; }
+}
+
+@keyframes cta-border-glow {
+  0%, 100% {
+    border-color: rgba(0, 212, 255, 0.28);
+    box-shadow: 0 0 50px rgba(0, 212, 255, 0.07), inset 0 0 50px rgba(0, 212, 255, 0.025);
+  }
+  50% {
+    border-color: rgba(124, 92, 255, 0.38);
+    box-shadow: 0 0 50px rgba(124, 92, 255, 0.09), inset 0 0 50px rgba(124, 92, 255, 0.03);
+  }
+}
+
+/* ============================================
+   TOUCH RIPPLE — mobile tap feedback
+   ============================================ */
+.touch-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 212, 255, 0.2);
+  pointer-events: none;
+  z-index: 0;
+  animation: touch-ripple-expand 0.55s ease-out forwards;
+}
+@keyframes touch-ripple-expand {
+  from { opacity: 1; transform: scale(0); }
+  to   { opacity: 0; transform: scale(1); }
+}
+@media (hover: none) {
+  .btn,
+  .svc-card,
+  .info-card,
+  .metric-card { overflow: hidden; }
+
+  body { animation: none; opacity: 1; }
+  body::after, .cursor-dot, .cursor-ring { display: none; }
+}
