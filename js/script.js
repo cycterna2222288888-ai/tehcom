@@ -416,50 +416,6 @@ function animateCounter(el) {
   );
 })();
 
-/* ============================================
-   CUSTOM CURSOR + MAGNETIC BUTTONS — desktop
-   ============================================ */
-(function initCustomCursor() {
-  if (window.matchMedia("(hover: none)").matches) return;
-
-  const dot = document.createElement("div");
-  dot.className = "cursor-dot";
-  const ring = document.createElement("div");
-  ring.className = "cursor-ring";
-  document.body.append(dot, ring);
-
-  let mx = -200, my = -200, rx = -200, ry = -200;
-
-  document.addEventListener("mousemove", (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-    dot.style.transform = `translate(${mx}px,${my}px)`;
-  });
-  document.documentElement.addEventListener("mouseleave", () => {
-    dot.style.opacity = "0";
-    ring.style.opacity = "0";
-  });
-  document.documentElement.addEventListener("mouseenter", () => {
-    dot.style.opacity = "1";
-    ring.style.opacity = "1";
-  });
-
-  (function loop() {
-    rx += (mx - rx) * 0.11;
-    ry += (my - ry) * 0.11;
-    ring.style.transform = `translate(${rx.toFixed(1)}px,${ry.toFixed(1)}px)`;
-    requestAnimationFrame(loop);
-  })();
-
-  const hoverSel = "a, button, .btn, .svc-card, .case-card, .info-card, .metric-card, label";
-  document.addEventListener("mouseover", (e) => {
-    if (e.target.closest(hoverSel)) ring.classList.add("is-hover");
-  });
-  document.addEventListener("mouseout", (e) => {
-    if (e.target.closest(hoverSel)) ring.classList.remove("is-hover");
-  });
-})();
-
 (function initMagneticButtons() {
   if (window.matchMedia("(hover: none)").matches) return;
   document.querySelectorAll(".btn--primary.btn--lg, .btn--outline-green.btn--lg").forEach((btn) => {
