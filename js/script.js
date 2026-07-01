@@ -200,15 +200,19 @@ function animateCounter(el) {
 }
 
 /* ============================================
-   HERO CANVAS — animated network graph
+   HERO CANVAS — animated network graph + mouse interaction
    ============================================ */
 (function initCanvas() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
 
-  const ctx = canvas.getContext('2d');
-  let nodes = [];
+  const ctx     = canvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let nodes  = [];
+  let sparks = [];
   let raf;
+
+  const mouse = { x: -9999, y: -9999 };
 
   const resize = () => {
     canvas.width  = canvas.offsetWidth;
@@ -217,19 +221,21 @@ function animateCounter(el) {
   };
 
   const buildNodes = () => {
-    const density = 12000;
-    const count   = Math.max(10, Math.floor((canvas.width * canvas.height) / density));
+    const count = Math.max(10, Math.floor((canvas.width * canvas.height) / 12000));
     nodes = Array.from({ length: count }, () => ({
       x:     Math.random() * canvas.width,
       y:     Math.random() * canvas.height,
-      vx:    (Math.random() - 0.5) * 0.35,
-      vy:    (Math.random() - 0.5) * 0.35,
+      vx:    (Math.random() - 0.5) * 0.175,
+      vy:    (Math.random() - 0.5) * 0.175,
       r:     Math.random() * 1.6 + 0.5,
       green: Math.random() < 0.25,
     }));
   };
 
-  const MAX_DIST = 140;
+  const MAX_DIST  = 140;
+  const REPEL_R   = 160;
+  const REPEL_F   = 2.2;
+  const MAX_SPEED = 3;
 
   const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -242,6 +248,22 @@ function animateCounter(el) {
       if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
     });
 
+    /* Mouse repel */
+    if (!reduced && mouse.x > -1000) {
+      nodes.forEach(n => {
+        const dx = n.x - mouse.x;
+        const dy = n.y - mouse.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 >= REPEL_R * REPEL_R || d2 === 0) return;
+        const dist = Math.sqrt(d2);
+        const f    = (1 - dist / REPEL_R) * REPEL_F;
+        n.vx += (dx / dist) * f;
+        n.vy += (dy / dist) * f;
+        const spd = Math.hypot(n.vx, n.vy);
+        if (spd > MAX_SPEED) { n.vx = n.vx / spd * MAX_SPEED; n.vy = n.vy / spd * MAX_SPEED; }
+      });
+    }
+
     /* Draw edges */
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
@@ -249,10 +271,9 @@ function animateCounter(el) {
         const dy   = nodes[i].y - nodes[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist >= MAX_DIST) continue;
-
         const alpha = (1 - dist / MAX_DIST) * 0.22;
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(0, 212, 255, ${alpha})`;
+        ctx.strokeStyle = `rgba(0,212,255,${alpha})`;
         ctx.lineWidth   = 0.6;
         ctx.moveTo(nodes[i].x, nodes[i].y);
         ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -264,9 +285,23 @@ function animateCounter(el) {
     nodes.forEach(n => {
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = n.green ? 'rgba(57, 255, 20, 0.50)' : 'rgba(0, 212, 255, 0.55)';
+      ctx.fillStyle = n.green ? 'rgba(57,255,20,0.50)' : 'rgba(0,212,255,0.55)';
       ctx.fill();
     });
+
+    /* Draw click sparks */
+    if (!reduced) {
+      sparks = sparks.filter(s => s.life > 0);
+      sparks.forEach(s => {
+        s.x += s.vx; s.y += s.vy;
+        s.vx *= 0.95; s.vy *= 0.95;
+        s.life -= 0.028;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 2.5 * s.life, 0, Math.PI * 2);
+        ctx.fillStyle = s.green ? `rgba(57,255,20,${s.life})` : `rgba(0,212,255,${s.life})`;
+        ctx.fill();
+      });
+    }
 
     raf = requestAnimationFrame(draw);
   };
@@ -280,6 +315,32 @@ function animateCounter(el) {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) cancelAnimationFrame(raf);
     else draw();
+  });
+
+  if (reduced) return;
+
+  /* Track mouse — only repel while hero is visible */
+  document.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > window.innerHeight) {
+      mouse.x = -9999; mouse.y = -9999; return;
+    }
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  }, { passive: true });
+
+  /* Click burst — spawn sparks at cursor position */
+  const hero = canvas.closest('section') || canvas.parentElement;
+  hero && hero.addEventListener('click', e => {
+    const r  = canvas.getBoundingClientRect();
+    const cx = e.clientX - r.left;
+    const cy = e.clientY - r.top;
+    if (cx < 0 || cy < 0 || cx > canvas.width || cy > canvas.height) return;
+    for (let i = 0; i < 14; i++) {
+      const angle = (i / 14) * Math.PI * 2;
+      const spd   = Math.random() * 2.5 + 0.8;
+      sparks.push({ x: cx, y: cy, vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd, life: 1, green: Math.random() < 0.35 });
+    }
   });
 }());
 
@@ -605,3 +666,280 @@ function animateCounter(el) {
 
   cards.forEach((card) => io.observe(card));
 })();
+
+/* ============================================
+   HIDDEN TERMINAL  —  press ` (backtick) to open
+   ============================================ */
+(function initTerminal() {
+  const PROMPT = 'visitor@tehcom:~$';
+
+  const CMDS = {
+    help: () => [
+      { t: 'system', v: 'Доступные команды:' },
+      { t: 'result', v: '  whoami   — кто вы такой' },
+      { t: 'result', v: '  scan     — сканирование портов' },
+      { t: 'result', v: '  ls       — список файлов' },
+      { t: 'result', v: '  hack     — попытаться взломать' },
+      { t: 'result', v: '  ping     — проверить связь' },
+      { t: 'result', v: '  ddos     — ОЧЕНЬ ПЛОХАЯ ИДЕЯ' },
+      { t: 'result', v: '  clear    — очистить экран' },
+      { t: 'result', v: '  exit     — закрыть терминал' },
+    ],
+    whoami: () => [
+      { t: 'result', v: `visitor_0x${Math.floor(Math.random() * 0xffff).toString(16).toUpperCase().padStart(4, '0')}` },
+      { t: 'result', v: 'Роль:         неавторизованный пользователь' },
+      { t: 'result', v: 'Уровень угрозы: LOW' },
+      { t: 'result', v: 'Рекомендация:   свяжитесь с нашей командой ИБ :)' },
+    ],
+    ls: () => [
+      { t: 'result', v: 'drwxr-xr-x  services/' },
+      { t: 'result', v: 'drwxr-xr-x  security/' },
+      { t: 'result', v: '-rw-r--r--  README.md' },
+      { t: 'result', v: '-rwx------  secret.enc    [ДОСТУП ЗАПРЕЩЁН]' },
+      { t: 'result', v: '-rw-r--r--  contacts.txt' },
+    ],
+    ping: () => [
+      { t: 'system', v: 'PING tehcom.ru (87.251.89.12): 56 bytes' },
+      { t: 'result', v: '64 bytes from 87.251.89.12: icmp_seq=0 ttl=64 time=4.2 ms', d: 450 },
+      { t: 'result', v: '64 bytes from 87.251.89.12: icmp_seq=1 ttl=64 time=3.8 ms', d: 900 },
+      { t: 'result', v: '64 bytes from 87.251.89.12: icmp_seq=2 ttl=64 time=4.1 ms', d: 1350 },
+      { t: 'system', v: '3 packets transmitted, 3 received, 0% packet loss', d: 1700 },
+    ],
+    scan: () => [
+      { t: 'system', v: 'Nmap scan report for tehcom.ru' },
+      { t: 'result', v: 'PORT     STATE  SERVICE', d: 250 },
+      { t: 'result', v: '22/tcp   open   ssh',     d: 550 },
+      { t: 'result', v: '80/tcp   open   http',    d: 850 },
+      { t: 'result', v: '443/tcp  open   https',   d: 1150 },
+      { t: 'result', v: '666/tcp  closed ???',     d: 1450 },
+      { t: 'system', v: 'Firewall detected. Scan complete.', d: 1750 },
+    ],
+    hack: () => [
+      { t: 'system', v: 'Инициализация атаки...' },
+      { t: 'result', v: '> Загрузка эксплоитов...       [OK]', d: 450 },
+      { t: 'result', v: '> Обход файрвола...            [OK]', d: 900 },
+      { t: 'result', v: '> Получение root-доступа...    [...]', d: 1350 },
+      { t: 'error',  v: '  ОТКАЗАНО. Наша команда уже на связи.', d: 2100 },
+      { t: 'system', v: 'IP зафиксирован. Хорошего дня! 👋', d: 2500 },
+    ],
+  };
+
+  /* Build DOM */
+  const wrap = document.createElement('div');
+  wrap.className = 'terminal-wrap';
+  wrap.setAttribute('role', 'dialog');
+  wrap.setAttribute('aria-modal', 'true');
+  wrap.setAttribute('aria-label', 'Терминал ТЕХКОМ');
+  wrap.setAttribute('aria-hidden', 'true');
+  wrap.innerHTML = `
+    <div class="terminal" role="document">
+      <div class="terminal__bar">
+        <span>${PROMPT}</span>
+        <span class="terminal__hint">Backtick / ESC — закрыть</span>
+      </div>
+      <div class="terminal__output" id="term-out" aria-live="polite" aria-atomic="false"></div>
+      <div class="terminal__row">
+        <span class="terminal__prompt" aria-hidden="true">${PROMPT}&nbsp;</span>
+        <input class="terminal__input" id="term-in" type="text" autocomplete="off" spellcheck="false" aria-label="Ввод команды">
+      </div>
+    </div>`;
+  document.body.appendChild(wrap);
+
+  const trigger = document.createElement('button');
+  trigger.className = 'term-trigger';
+  trigger.setAttribute('aria-label', 'Открыть терминал');
+  trigger.textContent = '>_';
+  document.body.appendChild(trigger);
+  trigger.addEventListener('click', () => isOpen ? close() : open());
+
+  const output = wrap.querySelector('#term-out');
+  const input  = wrap.querySelector('#term-in');
+  let isOpen   = false;
+  let ddosMode = false;
+  let ddosCount = 0;
+  let ddosBar   = null;
+
+  function line(text, type = 'result', delay = 0) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = `terminal__line terminal__line--${type}`;
+      el.textContent = text;
+      output.appendChild(el);
+      output.scrollTop = output.scrollHeight;
+    }, delay);
+  }
+
+  function banner() {
+    line('╔══════════════════════════════════════╗', 'system');
+    line('║  ТЕХКОМ  Security Terminal  v2.4.1   ║', 'system');
+    line('╚══════════════════════════════════════╝', 'system');
+    line('  Введите "help" для списка команд', 'result');
+    line('', 'result');
+  }
+
+  function processCmd(raw) {
+    const cmd = raw.trim().toLowerCase();
+    const echo = document.createElement('div');
+    echo.className = 'terminal__line terminal__line--cmd';
+    echo.textContent = `${PROMPT} ${raw}`;
+    output.appendChild(echo);
+
+    switch (cmd) {
+      case '':    break;
+      case 'clear': output.innerHTML = ''; break;
+      case 'exit':
+      case 'q':   close(); break;
+      case 'ddos': startDdos(); break;
+      default:
+        if (CMDS[cmd]) CMDS[cmd]().forEach(({ t, v, d = 0 }) => line(v, t, d));
+        else line(`Команда не найдена: ${raw}. Введите "help".`, 'error');
+    }
+    output.scrollTop = output.scrollHeight;
+  }
+
+  function startDdos() {
+    ddosMode  = true;
+    ddosCount = 0;
+    ddosBar   = null;
+    line('', 'result');
+    line('⚠  ВНИМАНИЕ: ОБНАРУЖЕНА DDOS-АТАКА!', 'error');
+    line('   Входящих пакетов: 847 291 в секунду', 'system');
+    line('   Нажимайте [ENTER] чтобы блокировать!', 'system');
+    line('', 'result');
+    renderDdosBar();
+  }
+
+  function renderDdosBar() {
+    if (!ddosBar) {
+      ddosBar = document.createElement('div');
+      ddosBar.className = 'terminal__line';
+      output.appendChild(ddosBar);
+    }
+    const filled = Math.round((ddosCount / 100) * 20);
+    ddosBar.textContent = `   [${'█'.repeat(filled)}${'░'.repeat(20 - filled)}] ${ddosCount}%  Заблокировано: ${ddosCount}/100`;
+    ddosBar.style.color = ddosCount >= 100 ? 'rgba(57,255,20,0.9)' : 'rgba(0,212,255,0.85)';
+    output.scrollTop = output.scrollHeight;
+  }
+
+  function blockPacket() {
+    if (ddosCount >= 100) return;
+    ddosCount = Math.min(100, ddosCount + Math.floor(Math.random() * 5) + 3);
+    renderDdosBar();
+    if (ddosCount >= 100) {
+      ddosMode = false;
+      setTimeout(() => {
+        line('', 'result');
+        line('✓  АТАКА ОТРАЖЕНА! Все пакеты заблокированы.', 'result');
+        line('   Именно это мы делаем для клиентов 24/7.', 'system');
+        line('', 'result');
+      }, 150);
+    }
+  }
+
+  function open() {
+    isOpen = true;
+    wrap.classList.add('is-open');
+    wrap.setAttribute('aria-hidden', 'false');
+    if (!output.children.length) banner();
+    input.focus();
+  }
+
+  function close() {
+    isOpen   = false;
+    ddosMode = false;
+    wrap.classList.remove('is-open');
+    wrap.setAttribute('aria-hidden', 'true');
+  }
+
+  /* Toggle on backtick */
+  document.addEventListener('keydown', e => {
+    if (e.key === '`') { e.preventDefault(); isOpen ? close() : open(); return; }
+    if (!isOpen) return;
+    if (e.key === 'Escape') { close(); return; }
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    if (ddosMode) { input.value = ''; blockPacket(); return; }
+    const val = input.value;
+    input.value = '';
+    processCmd(val);
+  });
+
+  /* Focus trap */
+  wrap.addEventListener('keydown', e => {
+    if (e.key === 'Tab') { e.preventDefault(); input.focus(); }
+  });
+
+  /* Backdrop click closes */
+  wrap.addEventListener('click', e => { if (e.target === wrap) close(); });
+}());
+
+/* ============================================
+   KONAMI CODE  —  ↑↑↓↓←→←→BA
+   ============================================ */
+(function initKonami() {
+  const SEQ = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let pos = 0;
+
+  document.addEventListener('keydown', e => {
+    if (e.key === SEQ[pos]) {
+      pos++;
+      if (pos === SEQ.length) { pos = 0; trigger(); }
+    } else {
+      pos = e.key === SEQ[0] ? 1 : 0;
+    }
+  });
+
+  function trigger() {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced) runRain();
+    showToast();
+  }
+
+  function runRain() {
+    const cv  = document.createElement('canvas');
+    cv.className  = 'matrix-rain';
+    cv.width  = window.innerWidth;
+    cv.height = window.innerHeight;
+    document.body.appendChild(cv);
+
+    const ctx   = cv.getContext('2d');
+    const SIZE  = 14;
+    const COLS  = Math.floor(cv.width / SIZE);
+    const drops = Array(COLS).fill(1);
+    const CHARS = '01テコムアイウエオカキクケコサシスセソタ01';
+
+    const id = setInterval(() => {
+      ctx.fillStyle = 'rgba(0,0,0,0.06)';
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      ctx.fillStyle = 'rgba(57,255,20,0.85)';
+      ctx.font = `${SIZE}px monospace`;
+      drops.forEach((y, i) => {
+        ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], i * SIZE, y * SIZE);
+        if (y * SIZE > cv.height && Math.random() > 0.975) drops[i] = 0;
+        else drops[i]++;
+      });
+    }, 45);
+
+    setTimeout(() => {
+      cv.style.transition = 'opacity 0.6s ease';
+      cv.style.opacity = '0';
+      setTimeout(() => { clearInterval(id); cv.remove(); }, 680);
+    }, 3200);
+  }
+
+  function showToast() {
+    const id  = Math.floor(Math.random() * 0xffff).toString(16).toUpperCase().padStart(4, '0');
+    const el  = document.createElement('div');
+    el.className  = 'konami-toast';
+    el.innerHTML  = `ДОСТУП ПОЛУЧЕН<br><small>Добро пожаловать, агент 0x${id}</small>`;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('is-visible')));
+    setTimeout(() => {
+      el.classList.remove('is-visible');
+      setTimeout(() => el.remove(), 450);
+    }, 3500);
+  }
+}());
