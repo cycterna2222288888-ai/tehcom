@@ -296,6 +296,7 @@ function animateCounter(el) {
         s.x += s.vx; s.y += s.vy;
         s.vx *= 0.95; s.vy *= 0.95;
         s.life -= 0.028;
+        if (s.life <= 0) return;
         ctx.beginPath();
         ctx.arc(s.x, s.y, 2.5 * s.life, 0, Math.PI * 2);
         ctx.fillStyle = s.green ? `rgba(57,255,20,${s.life})` : `rgba(0,212,255,${s.life})`;
