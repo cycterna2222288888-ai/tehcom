@@ -77,8 +77,7 @@ nav{position:sticky;top:0;z-index:200;background:#fff;border-bottom:1px solid va
 .trust-logo:hover{opacity:1;color:var(--ac)}
 
 /* ── SECTION COMMONS ── */
-.section{padding:96px 0}
-.section.bg2{background:var(--bg2)}
+
 .section.dark{background:var(--dark);color:#fff}
 .section.dark2{background:var(--dark2)}
 .w{max-width:1300px;margin:0 auto;padding:0 48px}
@@ -88,7 +87,8 @@ nav{position:sticky;top:0;z-index:200;background:#fff;border-bottom:1px solid va
 .sp{font-size:16px;color:var(--mid);max-width:560px;line-height:1.72;font-weight:300}
 .section.dark .sp,.section.dark2 .sp{color:rgba(255,255,255,.5)}
 .section-head{margin-bottom:56px}
-
+.section{padding:96px 0}
+.section.bg2{background-color:var(--bg2)}
 /* ── SERVICES ── */
 .srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .srv-card{padding:40px 32px;border-radius:12px;position:relative;overflow:hidden;min-height:295px;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s;background:var(--dark) var(--card-img,none) center/cover no-repeat}

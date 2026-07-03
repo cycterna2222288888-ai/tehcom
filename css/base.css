@@ -4,7 +4,7 @@
    Import on EVERY page before page-specific CSS
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('fonts.css');
 
 /* ============================================
    CSS CUSTOM PROPERTIES (single source of truth)
