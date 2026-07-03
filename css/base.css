@@ -137,7 +137,23 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-blue-border) transparent;
 }
+
+::selection {
+  background: var(--color-blue-glow);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg-primary); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-blue-border);
+  border-radius: var(--r-full, 999px);
+  border: 2px solid var(--color-bg-primary);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-blue-glow); }
 
 img, video, svg, canvas { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
