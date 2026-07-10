@@ -77,10 +77,14 @@
 
   const open = () => {
     overlay.classList.add('open');
+    burger.classList.add('is-open');
+    burger.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   };
   const close = () => {
     overlay.classList.remove('open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   };
 

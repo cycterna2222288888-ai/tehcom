@@ -625,11 +625,7 @@
     grid-template-columns: 1fr;
   }
   .sidebar {
-    position: static;
-    /* show nav horizontally on tablet */
-  }
-  .sidebar-nav {
-    display: none; /* hide on mobile — handled by page anchor links */
+    display: none; /* nav handled by page anchor links; CTA duplicated by the callout at the bottom of the content */
   }
 
   .feature-grid  { grid-template-columns: 1fr; }

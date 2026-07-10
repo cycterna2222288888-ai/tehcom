@@ -225,6 +225,13 @@
   color: var(--color-text-muted);
 }
 
+.hero__certs {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin-top: var(--sp-10);
+}
+
 /* ============================================
    SERVICES
    ============================================ */
@@ -731,6 +738,17 @@
 .partner-card:hover img {
   transform: scale(1.12);
   opacity: 1;
+}
+
+/* Logos that read visually smaller than peers at the shared box size */
+.partner-card img.logo--lg {
+  max-height: 52px;
+  max-width: 160px;
+}
+
+/* Dark-colored logos that vanish against the dark background — force a white silhouette */
+.partner-card img.logo--mono {
+  filter: brightness(0) invert(1);
 }
 
 /* Для логотипов с чёрными элементами на тёмном фоне */

@@ -513,6 +513,11 @@ p { color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
   transition: all var(--ease-base);
   transform-origin: center;
 }
+/* Morph into an X when the mobile menu is open — so the burger itself
+   becomes the close control instead of sitting on top of the overlay unchanged */
+.nav__burger.is-open .nav__burger-line:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav__burger.is-open .nav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav__burger.is-open .nav__burger-line:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* Mobile overlay */
 .nav__mobile-overlay {
@@ -537,15 +542,11 @@ p { color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
 }
 .nav__mobile-link:hover { color: var(--color-blue); }
 .nav__mobile-close {
-  position: absolute;
-  top: var(--sp-6);
-  right: var(--sp-6);
-  font-size: var(--text-xl);
-  color: var(--color-text-muted);
-  cursor: pointer;
-  transition: color var(--ease-fast);
+  /* redundant with the burger, which morphs into an X and sits in the same
+     top-right corner (nav is position:fixed above the overlay) — hiding
+     this avoids two overlapping close icons */
+  display: none;
 }
-.nav__mobile-close:hover { color: var(--color-blue); }
 
 /* ============================================
    FOOTER
